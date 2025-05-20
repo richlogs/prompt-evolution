@@ -1,7 +1,14 @@
+from enum import StrEnum
 import ollama
 from ollama import ChatResponse
 from pydantic import BaseModel
-MODEL_NAME = "Qwen3:4b"
+
+class ModelNames(StrEnum):
+    qwen_math = "qwen2-math:1.5b:4b"
+    gemma3 = "gemma3:4b"
+    qwen3 = "qwen3:4b"
+
+MODEL_NAME = ModelNames.qwen_math
 
 
 class LLM: 

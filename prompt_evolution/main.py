@@ -13,7 +13,7 @@ class ProblemRow(BaseModel):
     solution: str
     answer: int
 
-class ExperimentResults(BaseModel):
+class Homework(BaseModel):
     problems: list[ProblemRow]
     answers: list[Answer]
 
@@ -31,17 +31,30 @@ def batch_read_csv(file_path, batch_size=1):
                 )
                 models.append(model)
             except Exception as e:
-                print(f"Row skipped due to error: {e}")
+                pass
+                # print(f"Row skipped due to error: {e}")
         yield models
 
+def marker(homework: Homework):
+    n = len(homework.problems)
+    n_correct = 0
+    for problem, answer in zip(homework.problems, homework.answers):
+        if problem.answer == answer.answer:
+            n_correct += 1
+
+    if n == 0:
+        return 0
+    return n_correct / n
 
 original_developer_message = "<EMPTY_DEVELOPER_MESSAGE>"
-experiment_results = []
-for batch in batch_read_csv(TRAIN_PATH, batch_size=4):
+homework = []
+for batch in batch_read_csv(TRAIN_PATH, batch_size=20):
     solver = Solver(developer_message=original_developer_message)
     answers = [solver.solve(row.problem) for row in batch]
-    experiment_results.append(ExperimentResults(problems=batch, answers=answers))
-    print(experiment_results)
+    homework = Homework(problems=batch, answers=answers)
+
+    marked_homework = marker(homework)
+    print(f"Percentage correct: {round(marked_homework, 4)}%")
     break
 
 
