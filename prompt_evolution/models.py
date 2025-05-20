@@ -4,11 +4,11 @@ from ollama import ChatResponse
 from pydantic import BaseModel
 
 class ModelNames(StrEnum):
-    qwen_math = "qwen2-math:1.5b:4b"
+    qwen_math = "qwen2-math:1.5b"
     gemma3 = "gemma3:4b"
     qwen3 = "qwen3:4b"
 
-MODEL_NAME = ModelNames.qwen_math
+MODEL_NAME = ModelNames.gemma3
 
 
 class LLM: 
@@ -60,27 +60,4 @@ class Solver(LLM):
 #     def update_prompt(self, solver_prompt, marked_homework) -> solver_prompt:
 #         self.call()
 
-    
 
-
-
-
-
-
-# def mark(math_questions, answers: list[answers]) -> MarkedHomework:
-
-
-# class Evolver(LLM):
-#     def __init__(self, evolver_prompt: str, evolution_history=None):
-#         self.evolver_prompt = evolver_prompt
-#         self.evolution_history = evolution_history
-
-#     def update_prompt(self, solver_prompt, marked_homework) -> solver_prompt:
-#         self.call()
-
-    
-
-
-# solver = Solver(...)
-
-# solver.solve(math questions)

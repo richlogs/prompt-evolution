@@ -48,13 +48,13 @@ def marker(homework: Homework):
 
 original_developer_message = "<EMPTY_DEVELOPER_MESSAGE>"
 homework = []
-for batch in batch_read_csv(TRAIN_PATH, batch_size=20):
+for batch in batch_read_csv(TRAIN_PATH, batch_size=100):
     solver = Solver(developer_message=original_developer_message)
     answers = [solver.solve(row.problem) for row in batch]
     homework = Homework(problems=batch, answers=answers)
 
     marked_homework = marker(homework)
-    print(f"Percentage correct: {round(marked_homework, 4)}%")
+    print(f"Percentage correct: {round(marked_homework*100, 2)}%")
     break
 
 
